@@ -22,3 +22,12 @@
 
 ![찾지못함](https://search.pstatic.net/sunny/?src=https%3A%2F%2Fimg.flaticon.com%2Ficons%2Fpng%2F512%2F4144%2F4144529.png%3Fsize%3D1200x630f%26pad%3D10%2C10%2C10%2C10%26ext%3Dpng%26bg%3DFFFFFFFF&type=sc960_832)
 
+```python
+print("hello world!")
+```
+
+```html
+<div>
+    <p>hello world</p>
+</div>
+```
