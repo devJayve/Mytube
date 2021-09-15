@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QLineEdit
+from PyQt5.QtWidgets import QLineEdit,QDialog, QScrollArea, QWidget
 from PyQt5.QtGui import QIcon
 import sys
 
@@ -33,6 +33,9 @@ class MainUi(object):
         self.userIcon = (QtGui.QPixmap("Mytube photo/userIcon.png")).scaled(50, 50, QtCore.Qt.KeepAspectRatio)
         self.nonePlayList = (QtGui.QPixmap("Mytube photo/NonePlaylistIcon.png")).scaled(540, 370, QtCore.Qt.KeepAspectRatio)
         self.tinyLogoImg = (QtGui.QPixmap("Mytube photo/MainLogo.png")).scaled(140, 90, QtCore.Qt.KeepAspectRatio)
+        self.bigUserIcon = (QtGui.QPixmap("Mytube photo/userIcon.png")).scaled(250, 260, QtCore.Qt.KeepAspectRatio) 
+        self.whiteLineImg = (QtGui.QPixmap("Mytube photo/smallLine.png"))
+        self.modifyNameIcon = (QtGui.QPixmap("Mytube photo/modifyNameIcon.png"))
 
         #font
         self.font1 = QtGui.QFont()
@@ -47,6 +50,11 @@ class MainUi(object):
         self.font4 = QtGui.QFont()
         self.font4.setFamily("에스코어 드림 6 Bold")
         self.font4.setPointSize(15)
+        self.font5 = QtGui.QFont()
+        self.font5.setFamily("에스코어 드림 5 Medium")
+        self.font5.setPointSize(24)
+        
+        
     
 
         #BtnList
@@ -59,7 +67,7 @@ class MainUi(object):
         self.PlaylistPageUi()
         self.VideoPageUi()
         self.retranslateUi(self.mainWindow)
-        self.stackedWidget.setCurrentIndex(3)
+        self.stackedWidget.setCurrentIndex(0)
 
         self.mainWindow.show()
         
@@ -128,6 +136,12 @@ class MainUi(object):
         self.rgIdLine.setGeometry(QtCore.QRect(570, 70, 441, 41))
         self.rgTypeObject.append(self.rgIdLine)
 
+        self.rgIdCheckLabel = QtWidgets.QLabel(self.RegisterPage)
+        self.rgIdCheckLabel.setGeometry(1180,65,400,55)
+        self.rgIdCheckLabel.setText("")
+        self.rgIdCheckLabel.setFont(self.font2)
+        self.rgIdCheckLabel.setStyleSheet("color:red;")
+
         self.overlapCheck = QtWidgets.QPushButton(self.RegisterPage)
         self.overlapCheck.setGeometry(QtCore.QRect(1050, 70, 100, 40))
         self.overlapCheck.setFont(self.font2)
@@ -137,6 +151,19 @@ class MainUi(object):
         self.rgPwLine = QtWidgets.QLineEdit(self.RegisterPage)
         self.rgPwLine.setGeometry(QtCore.QRect(570, 170, 441, 41))
         self.rgTypeObject.append(self.rgPwLine)
+
+        self.rgPwCheckLabel = QtWidgets.QLabel(self.RegisterPage)
+        self.rgPwCheckLabel.setGeometry(1030,165,400,55)
+        self.rgPwCheckLabel.setText("")
+        self.rgPwCheckLabel.setFont(self.font2)
+        self.rgPwCheckLabel.setStyleSheet("color:red;")
+
+        self.rgPwCheckLabel2 = QtWidgets.QLabel(self.RegisterPage)
+        self.rgPwCheckLabel2.setGeometry(1030,265,400,55)
+        self.rgPwCheckLabel2.setText("")
+        self.rgPwCheckLabel2.setFont(self.font2)
+        self.rgPwCheckLabel2.setStyleSheet("color:red;")
+
 
         self.rgPwLine2 = QtWidgets.QLineEdit(self.RegisterPage)
         self.rgPwLine2.setGeometry(QtCore.QRect(570, 270, 441, 41))
@@ -191,15 +218,15 @@ class MainUi(object):
                 )
             self.rgTypeObject[i].setFont(self.font2)
 
-        self.rgFinishrBtn = QtWidgets.QPushButton(self.RegisterPage)
-        self.rgFinishrBtn.setGeometry(QtCore.QRect(820,820,260,50))
-        self.rgFinishrBtn.setFont(self.font3)
-        self.rgFinishrBtn.setText("회원가입")
-        self.rgFinishrBtn.setStyleSheet(
+        self.rgFinishBtn = QtWidgets.QPushButton(self.RegisterPage)
+        self.rgFinishBtn.setGeometry(QtCore.QRect(820,820,260,50))
+        self.rgFinishBtn.setFont(self.font3)
+        self.rgFinishBtn.setText("회원가입")
+        self.rgFinishBtn.setStyleSheet(
             "background-color: rgb(219, 32, 44);"
             "color:white;"
             )
-        self.RegisterPageBtnList.append(self.rgFinishrBtn)
+        self.RegisterPageBtnList.append(self.rgFinishBtn)
         
         for i in range(0,2):
             self.RegisterPageBtnList[i].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -249,11 +276,201 @@ class MainUi(object):
         self.userInfoBtn.setIconSize(QtCore.QSize(50,50))
         self.userInfoBtn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor)) 
 
-        self.nonePlayListLabel = QtWidgets.QLabel(self.PlaylistPage)
+        self.addDialog = QDialog()
+        self.addLabel = QtWidgets.QLabel(self.addDialog)
+        self.addLabel.setGeometry(200,50,600,50)
+        self.addLabel.setText("추가할 재생목록 이름을 입력해주세요.")
+        self.addLabel.setFont(self.font3)
+        self.addLabel.setStyleSheet("color:white;")
+        self.addLabel.setAlignment(QtCore.Qt.AlignVCenter)
+        self.typeListLine = QtWidgets.QLineEdit(self.addDialog)
+        self.typeListLine.setGeometry(100,100,600,50)
+        self.typeListLine.setStyleSheet("color:white;")
+        self.typeListLine.setFont(self.font2)
+        self.btnDialog = QtWidgets.QPushButton("확인", self.addDialog)
+        self.btnDialog.setGeometry(320,180,110,41)
+        self.btnDialog.setStyleSheet(
+            "background-color:red;"
+            "color:white;"
+        )
+        self.btnDialog.setFont(self.font2)
+
+        self.addDialog.setWindowTitle('재생목록 추가')
+        self.addDialog.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.addDialog.setStyleSheet("background-color:black;")
+        self.addDialog.resize(800, 300)
+
+        self.modifyDialog = QDialog()
+        self.userIconLabel = QtWidgets.QLabel(self.modifyDialog)
+        self.userIconLabel.setGeometry(110,40,250,260)
+        self.userIconLabel.setPixmap(self.bigUserIcon)
+        
+        self.NameLabel = QtWidgets.QLabel(self.modifyDialog)
+        self.NameLabel.setGeometry(100,310,240,70)
+        self.NameLabel.setFont(self.font5)
+        self.NameLabel.setText("김주영님")
+        self.NameLabel.setStyleSheet("color:white;")
+
+        self.NameModifyBtn = QtWidgets.QPushButton(self.modifyDialog)
+        self.NameModifyBtn.setGeometry(290,330,50,50)
+        self.NameModifyBtn.setIcon(QtGui.QIcon(self.modifyNameIcon))
+        self.NameModifyBtn.setIconSize(QtCore.QSize(50,50))
+        self.whiteLine = QtWidgets.QLabel(self.modifyDialog)
+        self.whiteLine.setGeometry(80,370,450,25)
+        self.whiteLine.setPixmap(self.whiteLineImg)
+        
+        self.idLabel = QtWidgets.QLabel(self.modifyDialog)
+        self.idLabel.setGeometry(50,440,100,30)
+        self.idLabel.setFont(self.font3)
+        self.idLabel.setText("아이디")
+        self.idLabel.setStyleSheet("color:white;")
+
+        self.idLine = QtWidgets.QLabel(self.modifyDialog)
+        self.idLine.setGeometry(150,440,250,30)
+        self.idLine.setText("myid")
+        self.idLine.setFont(self.font3)
+        self.idLine.setStyleSheet("background-color: white;")
+
+        self.pwLabel = QtWidgets.QLabel(self.modifyDialog)
+        self.pwLabel.setGeometry(50,510,100,30)
+        self.pwLabel.setFont(self.font3)
+        self.pwLabel.setText("비밀번호")
+        self.pwLabel.setStyleSheet("color:white;")
+
+        self.pwLine = QtWidgets.QLineEdit(self.modifyDialog)
+        self.pwLine.setGeometry(150,510,250,30)
+        self.pwLine.setText("mypw")
+        self.pwLine.setFont(self.font3)
+        self.pwLine.setStyleSheet("background-color: white;")
+
+        self.phonNumberLabel = QtWidgets.QLabel(self.modifyDialog)
+        self.phonNumberLabel.setGeometry(50,580,100,30)
+        self.phonNumberLabel.setFont(self.font3)
+        self.phonNumberLabel.setStyleSheet("color:white;")
+        self.phonNumberLabel.setText("연락처")
+
+        self.pNLine = QtWidgets.QLineEdit(self.modifyDialog)
+        self.pNLine.setGeometry(150,580,250,30)
+        self.pNLine.setText("mypn")
+        self.pNLine.setFont(self.font3)
+        self.pNLine.setStyleSheet("background-color: white;")
+
+        self.modifyFinishBtn = QtWidgets.QPushButton(self.modifyDialog)
+        self.modifyFinishBtn.setGeometry(160,700,150,50)
+        self.modifyFinishBtn.setText("확인")
+        self.modifyFinishBtn.setFont(self.font3)
+        self.modifyFinishBtn.setStyleSheet(
+            "background-color: rgb(219, 32, 44);"
+            "color:white;")
+
+        self.modifyDialog.setWindowTitle('개인정보 수정')
+        self.modifyDialog.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.modifyDialog.setStyleSheet("background-color:black;")
+        self.modifyDialog.resize(500, 800)  
+
+        self.searchDialog = QDialog()
+
+        self.shMainLabel = QtWidgets.QLabel(self.searchDialog)
+        self.shMainLabel.setGeometry(50,110,381,61)
+        self.shMainLabel.setText("유튜브 영상 검색")
+        self.shMainLabel.setFont(self.font5)
+        self.shMainLabel.setStyleSheet("color:white;")
+        self.shMainLabel.setAlignment(QtCore.Qt.AlignVCenter)
+        self.typeVideoLine = QtWidgets.QLineEdit(self.searchDialog)
+        self.typeVideoLine.setGeometry(40,190,281,51)
+        self.typeVideoLine.setStyleSheet("background-color:white;")
+        self.typeVideoLine.setFont(self.font2)
+        self.searchBtn = QtWidgets.QPushButton("검색", self.searchDialog)
+        self.searchBtn.setGeometry(340,190,110,50)
+        self.searchBtn.setStyleSheet(
+            "background-color:red;"
+            "color:white;"
+        )
+        self.searchBtn.setFont(self.font2)
+
+        self.videoShow = QtWidgets.QLabel(self.searchDialog)
+        self.videoShow.setStyleSheet("background-color:white;")
+        self.videoShow.setGeometry(60,270,381,221)
+
+        self.videoNameShow = QtWidgets.QLabel(self.searchDialog)
+        self.videoNameShow.setGeometry(50,510,401,31)
+        self.videoNameShow.setStyleSheet("color:white;")
+        self.videoNameShow.setFont(self.font2)
+        self.videoNameShow.setText("영상 이름")
+
+        self.videoAddBtn = QtWidgets.QPushButton("확인", self.searchDialog)
+        self.videoAddBtn.setGeometry(180,600,110,50)
+        self.videoAddBtn.setStyleSheet(
+            "background-color:red;"
+            "color:white;"
+        )
+        self.videoAddBtn.setFont(self.font2)
+
+
+        self.searchDialog.setWindowTitle('영상 추가')
+        self.searchDialog.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.searchDialog.setStyleSheet("background-color:black;")
+        self.searchDialog.resize(500, 686)
+
+        # 플레이리스트 위젯
+        playlistWidget =  QtWidgets.QWidget()
+        playlistWidget.setFixedHeight(1000)
+        self.plScrollArea = QtWidgets.QScrollArea(self.PlaylistPage)
+        
+        self.plWidgetList = []
+        self.plNameList = []
+
+        for i in range(0,9):
+            if i<3:
+                plWidget = QtWidgets.QLabel(playlistWidget)
+                plWidget.setStyleSheet("background-color:white;")
+                plWidget.setGeometry(30+490*i,20,420,250)
+                self.plWidgetList.append(plWidget)
+            elif i<6:
+                plWidget = QtWidgets.QLabel(playlistWidget)
+                plWidget.setStyleSheet("background-color:white;")
+                plWidget.setGeometry(30+490*(i-3),340,420,250)
+                self.plWidgetList.append(plWidget) 
+            else :
+                plWidget = QtWidgets.QLabel(playlistWidget)
+                plWidget.setStyleSheet("background-color:white;")
+                plWidget.setGeometry(30+490*(i-6),660,420,250)
+                self.plWidgetList.append(plWidget)
+
+        for i in range(0,9):
+            if i<3:
+                plName = QtWidgets.QLabel(playlistWidget)
+                plName.setStyleSheet("color:white;")
+                plName.setFont(self.font3)
+                plName.setGeometry(40+490*i,290,410,40)
+                self.plNameList.append(plName)
+            elif i<6:
+                plName = QtWidgets.QLabel(playlistWidget)
+                plName.setStyleSheet("color:white;")
+                plName.setFont(self.font3)
+                plName.setGeometry(40+490*(i-3),600,410,40)
+                self.plNameList.append(plName) 
+            else :
+                plName = QtWidgets.QLabel(playlistWidget)
+                plName.setStyleSheet("color:white;")
+                plName.setFont(self.font3)
+                plName.setGeometry(40+490*(i-6),920,410,40)
+                self.plNameList.append(plName)
+
+        for i in range(0,9):
+            self.plWidgetList[i].hide()
+            self.plNameList[i].hide()
+
+        self.plScrollArea.setWidget(playlistWidget)
+        self.plScrollArea.setGeometry(40,180,1460,690)
+        self.plScrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.plScrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.plScrollArea.setWidgetResizable(True)
+
+        self.nonePlayListLabel = QtWidgets.QLabel(self.plScrollArea)
         self.nonePlayListLabel.setGeometry(QtCore.QRect(500,310,540,370))  
         self.nonePlayListLabel.setPixmap(self.nonePlayList)
-
-
+                
         self.stackedWidget.addWidget(self.PlaylistPage)  
 
     def VideoPageUi (self):
@@ -292,7 +509,6 @@ class MainUi(object):
         self.videoName.setFont(self.font4)
         self.videoName.setText("영상 제목입니다.")
         self.videoName.setStyleSheet("color:white;")
-
 
 
         self.stackedWidget.addWidget(self.VideoPage)

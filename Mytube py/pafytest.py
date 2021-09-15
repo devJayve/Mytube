@@ -81,12 +81,61 @@
     
 # cv2.destroyAllWindows()
 
+# from youtubesearchpython import VideosSearch
+# import pafy
+# import vlc
+
+# videosSearch = VideosSearch('프라우드먼', limit = 1)
+
+# videoResult = videosSearch.result()
+# print(videoResult)
+
+# result = {
+#     'result': [{
+#         'type': 'video',
+#         'id': 'hQrEGhOjgUg',
+#         'title': '[PLAYLIST] 아이유노래모음',
+#         'publishedTime': '5 months ago',
+#         'duration': '1:28:48',
+#         'viewCount': {
+#             'text': '2,867,389 views',
+#             'short': '2.8M views'},
+#         'thumbnails': [{
+#             'url': 'https://i.ytimg.com/vi/hQrEGhOjgUg/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLByufGejVsV5dtjLFH2OiDQ3y_5Kw', 'width': 360, 'height': 202}, {'url': 'https://i.ytimg.com/vi/hQrEGhOjgUg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDfOHTHULDt_qNBE0BQecVm22EMKg',
+#             'width': 720,
+#             'height': 404}],
+#         'richThumbnail': None,
+#         'descriptionSnippet': [{
+#             'text': '[PLAYLIST] '},
+#             {'text': '아이유', 'bold': True},
+#             {'text': '노래모음 저는 광고를 붙이지 않습니다. 유튜브 정책상 중간 광고가 나타날 수 있습니다. 모든 광고수익은\xa0...'}],
+#         'channel': {
+#             'name': '나 들으려고 올리는 채널',
+#             'id': 'UCvX0LQOt29-C1jTgVJnnW3w',
+#             'thumbnails': [{
+#                 'url': 'https://yt3.ggpht.com/ytc/AKedOLQRscq8jbke16RNh9B5tGS8bbw2iSdntUWwAOvH=s68-c-k-c0x00ffffff-no-rj',
+#                 'width': 68, 'height': 68}],
+#             'link': 'https://www.youtube.com/channel/UCvX0LQOt29-C1jTgVJnnW3w'},
+#         'accessibility': {
+#             'title': '[PLAYLIST] 아이유노래모음 by 나 들으려고 올리는 채널 5 months ago 1 hour, 28 minutes 2,867,389 views',
+#             'duration': '1 hour, 28 minutes, 48 seconds'},
+#         'link': 'https://www.youtube.com/watch?v=hQrEGhOjgUg',
+#         'shelfTitle': None}]
+#             }
+
+# url = ((videoResult['result'])[0])['link']
+# print(url)
+# thumbnail = (((videoResult['result'])[0])['thumbnails'][0])['url']
+# print(thumbnail)
+
+# video = pafy.new(url)
+# best = video.getbest()
+# media = vlc.MediaPlayer(best.url)
+# media.play()
+
 import pafy
-import vlc
-url = "https://www.youtube.com/watch?v=F4neLJQC1_E"
+keyword = "아이유"
+url = "https://www.youtube.com/results?search_query={}".format(keyword)
 video = pafy.new(url)
-#audio_url = video.getbestaudio(preftype="m4a").url
-#print(audio_url)
-media = vlc.media(video)
-media = vlc.MediaPlayer(video)
-media.play()
+print(video.title)
+
