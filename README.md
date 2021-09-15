@@ -20,4 +20,4 @@
     - 첫 째 자식
     - 둘 째 자식
 
-![찾지못함](\Mytube py\Mytube photo\addIcon.png)
+![찾지못함](./Mytube py/Mytube photo/addIcon.png)
